@@ -2,8 +2,7 @@
 
 Doo is a simple todo application built using django frame work. This application has user authentication, personalized projects, Weekly tasks and profile.
 
-![image]
-(https://github.com/shithee/doo/blob/master/screenshots/home.png)
+![Homepage Screenshot](https://github.com/shithee/doo/blob/master/screenshots/home.png)
 
 ## Features
 
