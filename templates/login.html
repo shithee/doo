@@ -1,0 +1,44 @@
+{% extends 'signup.html' %}
+
+
+     {% block authcontainer %}
+      <div class="authcontainer logcontain has-background-light">
+     {% endblock %}
+
+{% block authform %}
+
+      
+          <form method="post" class="authform">
+                  {% csrf_token %}
+                  {% if message %}
+                       <h6 class=" error has-text-danger">{{ message }}</h6>
+                  {% endif %}
+                  <input type="hidden" name="next" value="{{ request.GET.next }}">
+                  <div class="field">
+                      <p class="control has-icons-left has-icons-right">
+                          <input class="input" name="username" type="text" placeholder="Username">
+                           <span class="icon is-small is-left">
+                               <i class="fas fa-user"></i>
+                           </span>
+                     </p>
+                   </div>
+                   <div class="field">
+                        <p class="control has-icons-left">
+                           <input class="input" name="password" type="password" placeholder="Password">
+                           <span class="icon is-small is-left">
+                               <i class="fas fa-lock"></i>
+                          </span>
+                        </p>
+                   </div>
+                   <div class="field">
+                        <p class="control">
+                            <button class="button is-danger">
+                                 Login
+                           </button>
+                        </p>
+                  </div>
+                  <h3 class="auth-links">Don't have an account? <a href="{% url 'signup' %}"> Signup </a> </h3>
+                  <!--<h3 class="forgot"><a href=""> Forgot password ? </a> </h3>-->
+          </form>
+
+{% endblock %}

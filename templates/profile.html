@@ -1,0 +1,50 @@
+{% extends 'all.html' %}
+{% load static %}
+
+
+	{% block leftmenu %} {% endblock %}
+
+     {% block content %}
+        
+           <div class="profilecontainer">
+               <div class="infocard columns has-background-light">
+                   <div class="column is-4">
+                      <img  src="/{{ user.profile.image }}">
+                   </div>
+                   <div class="column  userinfo is-8">
+                       <h1>{{ user.get_username }}</h1>
+                       <h3>{{ user.email  }}</h3>
+                       <h5>{{ user.profile.bio }}</h5>
+                   </div>
+               </div>
+               <div class="moreinformations columns">
+                   <div class="column project is-5">
+                       <h1 class="has-text-danger"> Projects </h1>
+                       <div class="list is-hoverable">
+                           {% for p in projects %}
+                           <a class="list-item">
+			                    <span class="dot has-background-{% cycle 'danger' 'dark' 'success' 'link' 'black' 'primary' 'warning' 'info' %}"></span>
+                                {{ p.name }}
+                                <h6> {{ p.description }}</h6>
+                           </a>
+                           {% endfor %}
+                        </div>
+                   </div>
+                   <div class="column is-7">
+                       <h1 class="has-text-danger"> Outlines </h1>
+                       <div class="list is-hoverable">
+                           {% for o in outlines %}
+                           <a class="list-item">
+			                    <span class="dot has-background-{% cycle 'danger' 'dark' 'success' 'link' 'black' 'primary' 'warning' 'info' %}"></span>
+                                {{ o.name }}
+                                <h6> {{ o.deadline }}  #{{ o.project }}</h6>
+                           </a>
+                           {% endfor %}
+                        </div>
+                   </div>
+               </div>
+           </div>
+
+     {% endblock %}
+    
+     {% block rightmenu %} {% endblock %}

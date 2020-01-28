@@ -1,0 +1,46 @@
+{% extends 'all.html' %}
+
+{% block title %} Create a new Project . Doo {% endblock %}
+
+{% block header %} Create New Project {% endblock %}
+
+
+{% block leftmenu %} {% endblock %}
+
+{% block content %}
+   <div class="formcontainer">
+   <form method="post">
+   {% csrf_token %}
+   <h4 class="has-text-danger">{{ message }}</h4>
+       <div class="field">
+  <label class="label">Title</label>
+  <div class="control">
+    <input class="input" type="text" name="name" placeholder="e.g  LearnersIndia">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Description</label>
+  <div class="control">
+    <textarea class="textarea" name="description" placeholder="Add more about the project.."></textarea>
+  </div>
+</div>
+<div class="field">
+  <label class="checkbox">
+          <input type="checkbox" name="favourite">
+          Favourite
+  </label>
+</div>
+<div class="finish">
+<button class="button is-danger">
+    <span class="icon is-small">
+      <i class="fas fa-check"></i>
+    </span>
+    <span> Add Project </span>
+    </button>
+</div>
+</form>
+   </div>
+{% endblock %}
+
+{% block taskstatus %}{% endblock %}

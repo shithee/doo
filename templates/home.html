@@ -1,0 +1,109 @@
+{% extends 'all.html' %}
+{% load static %}
+{% block title %} {{ head }} tasks left to Doo  {% endblock %}
+{% block content %}
+    {% if tasks %}
+	  <table class="table" id="tasklists">
+	    {% now "Y-m-d H:M:S" as today %}
+	    {% for t in tasks %}
+		{% if not t.status or head == 'Finished Tasks ✔' %}
+	     <tr id="taskrow{{ t.id }}">
+		     <td> 
+			     <button class="button is-small is-rounded is-danger {% if t.status %}completed{% endif %}" onclick="finishtask('{{ t.id }}','{{ t.status }}')">
+                    <span class="icon is-small">
+                         <i class="fas fa-check"></i>
+                    </span>
+                 </button>
+			 </td>
+			 <td class="task">
+			     <a class="">{{ t.name }}</a>
+                 <h5 class="smalldate {% if today > t.deadline|date:'Y-m-d H:M:S' and not t.status %} has-text-danger overdue {% endif %}">
+				         {{ t.deadline }}
+				 </h5>
+			 </td>
+			 {% if not t.status %}
+			 <td><span class="tag is-light">{{ t.get_priority_display }}</span></td>
+			 {% else %}
+			 <td><span class="tag is-danger">{{ t.closed_at }}</span></td>
+			 {% endif %}			 
+			 {% if not t.outline %}
+			 <td><span class="tag is-dark"> Inbox </span></td>
+			 {% else %}
+			 <td><span class="tag is-dark">{{ t.outline }}</span></td>
+			 {% endif %}
+			 <td><p class="buttons">
+                     
+					 <button class="button is-small is-rounded finishtask" onclick="removetask('{{ t.id }}')">
+                       <span class="icon is-small">
+                           <i class="fas fa-times"></i>
+                       </span>
+                     </button>
+				 </p>
+				 
+
+		 </tr>
+		 {% endif %}
+		 {% endfor %}
+		 
+		 <tr>
+		     <td >
+			    <button class="button is-small is-rounded is-danger {% if t.status %}completed{% endif %}" onclick="showtask_adder()">
+                    <span class="icon is-small">
+                         <i class="fas fa-plus"></i>
+                    </span>
+                 </button>
+			 </td>
+		 </tr>
+
+	  </table>
+	  <div class="newtasktab" id="addtask" >
+	       <div class="field has-addons">
+                 <div class="control taskinput">
+			          <input class="input" type="text" id="taskinput" placeholder="Eg. New task #outline *1 @6.30pm 23 jan 2020 ">
+                      <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' /> 
+                 </div>
+                 <div class="control">
+                       <a class="button is-danger completed" onclick="task_input('add')">
+                           Add
+                       </a>
+                 </div>
+            </div>
+			<div class="list is-hoverable" id="inputsuggest" data-outline="">
+	        </div>
+		</div>
+	  {% endif %}
+	  {% if not tasks %}
+	     <div class="notasks is-centered">
+		    <div class="imagevisuals">
+		      {% if latest %}
+		         <img src="{% static 'img/party.png' %}">
+			     <h1>You Completed all tasks from this section. Enjoy !</h1>
+			  {% else %}
+		         <img src="{% static 'img/none.png' %}">
+			     <h1>Welcome to this section, create new tasks!</h1>
+			   {% endif %}
+			</div>
+			 <button class="button is-danger is-outlined" onclick="showtask_adder(true)">
+			     <span>Add Task</span>
+			     <span class="icon is-small">
+                     <i class="fas fa-plus"></i>
+                 </span>
+			 </button>
+			  <div class="newtasktab" id="newtask">
+	              <div class="field has-addons">
+                        <div class="control taskinput">
+			                 <input class="input" id="taskinput" type="text" placeholder="Eg. New task #outline *1 @6.30pm 23 jan 2020 ">
+                             <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' /> 
+                        </div>
+                        <div class="control">
+                             <a class="button is-danger completed" onclick="task_input('new')">
+                                Add
+                             </a>
+                        </div>
+                   </div>
+			       <div class="list is-hoverable" id="inputsuggest" data-outline="">
+	               </div>
+	            </div>
+		 </div>
+	   {% endif %}
+{% endblock %}
